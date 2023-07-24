@@ -19,10 +19,16 @@ public class Product {
 	@Column(nullable = false, length = 30)
 	private String name;
 	
+	private Double price;
+	
+	private Double discount;
+	
 	public Product() {
 	}
-	public Product(String name) {
+	public Product(String name, Double price, Double discount) {
 		this.name = name;
+		this.price = price;
+		this.discount = discount;
 	}
 	
 	public Long getId() {
