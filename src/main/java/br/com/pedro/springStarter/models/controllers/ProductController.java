@@ -3,7 +3,6 @@ package br.com.pedro.springStarter.models.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pedro.springStarter.models.entities.Product;
@@ -17,8 +16,7 @@ public class ProductController {
 	ProductRepository productRepository;
 	
 	@PostMapping("/novoProduto")
-	public Product newProduct(@RequestParam String name) {
-		Product newProduct = new Product(name);
+	public Product newProduct(Product newProduct) {
 		productRepository.save(newProduct);
 		return newProduct;
 	}

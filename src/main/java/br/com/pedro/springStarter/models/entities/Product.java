@@ -7,32 +7,48 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "products_table")
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 30)
 	private String name;
-	
+
 	private Double price;
-	
+
 	private Double discount;
-	
+
 	public Product() {
 	}
+
 	public Product(String name, Double price, Double discount) {
 		this.name = name;
 		this.price = price;
 		this.discount = discount;
 	}
-	
+
 	public Long getId() {
 		return id;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
 	}
 
 	public void setId(Long id) {
@@ -46,6 +62,5 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 }
