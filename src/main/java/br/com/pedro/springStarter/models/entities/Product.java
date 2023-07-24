@@ -19,6 +19,8 @@ public class Product {
 	@Column(nullable = false, length = 30)
 	private String name;
 	
+	public Product() {
+	}
 	public Product(String name) {
 		this.name = name;
 	}
