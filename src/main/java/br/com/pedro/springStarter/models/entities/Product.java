@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "products_table")
@@ -14,18 +17,22 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@NotBlank
 	@Column(nullable = false, length = 30)
 	private String name;
-
-	private Double price;
-
-	private Double discount;
+	
+	@Min(value = 0)
+	private double price;
+	
+	@Min(value = 0)
+	@Max(value = 1)
+	private double discount;
 
 	public Product() {
 	}
 
-	public Product(String name, Double price, Double discount) {
+	public Product(String name, double price, double discount) {
 		this.name = name;
 		this.price = price;
 		this.discount = discount;
