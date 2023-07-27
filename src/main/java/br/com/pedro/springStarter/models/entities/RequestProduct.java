@@ -15,4 +15,8 @@ public record RequestProduct(
 		
 		@Min(0)
 		@Max(1)
-		double discount) {}
+		double discount,
+		
+		boolean active
+		
+		) {}
