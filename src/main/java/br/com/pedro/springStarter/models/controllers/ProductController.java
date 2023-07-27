@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,11 +63,21 @@ public class ProductController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Product> updateProduct(@RequestBody @Valid RequestProduct requestedProduct) {
-		Product updatedProduct = new Product(requestedProduct);
-		productRepository.save(updatedProduct);
+	@Transactional
+	public ResponseEntity<Product> updateProduct(@RequestBody @Valid RequestProduct data) {
+		Optional<Product> dataProduct = productRepository.findById(data.id());
 		
-		return ResponseEntity.ok().build();
+		if (dataProduct.isPresent()) {
+			Product updatedProduct = dataProduct.get();
+			
+			updatedProduct.setName(data.name());
+			updatedProduct.setPrice(data.price());
+			updatedProduct.setDiscount(data.discount());
+			productRepository.save(updatedProduct);
+			
+			return ResponseEntity.ok().build();	
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping(path="/{id}")
