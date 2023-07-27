@@ -1,0 +1,1 @@
+ALTER TABLE products_table CHANGE active available boolean;

@@ -17,6 +17,6 @@ public record RequestProduct(
 		@Max(1)
 		double discount,
 		
-		boolean active
+		boolean available
 		
 		) {}

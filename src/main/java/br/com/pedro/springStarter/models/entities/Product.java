@@ -38,7 +38,7 @@ public class Product {
 	@Max(value = 1)
 	private double discount;
 	
-	private boolean active;
+	private boolean available;
 	
 	public Product() {
 	}
@@ -47,7 +47,7 @@ public class Product {
 		this.name = name;
 		this.price = price;
 		this.discount = discount;
-		this.active = true;
+		this.available = true;
 	}
 
 	public Product(RequestProduct requestProd) {
@@ -55,7 +55,7 @@ public class Product {
 		this.name = requestProd.name();
 		this.price = requestProd.price();
 		this.discount = requestProd.discount();
-		this.active = requestProd.active();
+		this.available = requestProd.active();
 	}
 
 	public Long getId() {
@@ -91,11 +91,11 @@ public class Product {
 	}
 
 	public boolean isActive() {
-		return active;
+		return available;
 	}
 
 	public void setActive(boolean active) {
-		this.active = active;
+		this.available = active;
 	}
 
 	public void setPrice(double price) {
