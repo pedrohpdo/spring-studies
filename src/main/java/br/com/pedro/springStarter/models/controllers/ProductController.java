@@ -48,7 +48,7 @@ public class ProductController {
 	}
 	
 	@GetMapping(path="/{id}")
-	public @ResponseBody ResponseEntity<Product> getProductById(@PathVariable Long id) {
+	public @ResponseBody ResponseEntity<Product> getProductById(@RequestBody @PathVariable Long id) {
 		Optional<Product> prod = productRepository.findById(id);
 
 		return prod.isPresent() ? ResponseEntity.ok(prod.get()) : ResponseEntity.noContent().build();
@@ -62,8 +62,10 @@ public class ProductController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<Product> updateProduct(@Valid Product produto) {
-		productRepository.save(produto);
+	public ResponseEntity<Product> updateProduct(@RequestBody @Valid RequestProduct requestedProduct) {
+		Product updatedProduct = new Product(requestedProduct);
+		productRepository.save(updatedProduct);
+		
 		return ResponseEntity.ok().build();
 	}
 	

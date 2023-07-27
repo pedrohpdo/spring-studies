@@ -51,6 +51,7 @@ public class Product {
 		this.name = requestProd.name();
 		this.price = requestProd.price();
 		this.discount = requestProd.discount();
+		this.id = requestProd.id();
 	}
 
 	public Long getId() {
