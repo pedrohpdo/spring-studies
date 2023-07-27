@@ -24,7 +24,7 @@ import jakarta.validation.Valid;
 
 /**
  * Controller responsável por determinar as funções da api
- * 
+ * 	
  * @author Pedro Henrique Pereira de Oliveira
  *
  */
@@ -32,10 +32,18 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/produtos")
 public class ProductController {
-	
+
 	@Autowired
 	ProductRepository productRepository;
-
+	
+	/**
+	 * 
+	 * Persist a valid Product object on the database
+	 * 
+	 * @param requestedProduct
+	 * @return 200ok
+	 */
+	
 	@PostMapping
 	public @ResponseBody ResponseEntity<Product> addProduct(@RequestBody @Valid RequestProduct requestedProduct) {
 		Product newProduct = new Product(requestedProduct);
@@ -43,56 +51,91 @@ public class ProductController {
 		return ResponseEntity.ok().build();
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	
 	@GetMapping
 	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts() {
 		return ResponseEntity.ok(productRepository.findAllByAvailableTrue());
 	}
 	
-	@GetMapping(path="/{id}")
+	/**
+	 * 
+	 * Returns um produto baseado no seu id de registro
+	 *  
+	 * @param id
+	 * @return
+	 */
+	
+	@GetMapping(path = "/{id}")
 	public @ResponseBody ResponseEntity<Product> getProductById(@RequestBody @PathVariable Long id) {
 		Optional<Product> prod = productRepository.findById(id);
 
 		return prod.isPresent() ? ResponseEntity.ok(prod.get()) : ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(path="/page/{numberPage}") 	
-	public @ResponseBody ResponseEntity<Iterable<Product>> getPages(@PathVariable int numberPage){
+	/**
+	 * 
+	 * Retorna uma consulta paginada de 3 produtos por página
+	 * 
+	 * @param numberPage
+	 * @return 200 ok
+	 */
+	
+	@GetMapping(path = "/page/{numberPage}")
+	public @ResponseBody ResponseEntity<Iterable<Product>> getPages(@PathVariable int numberPage) {
 		Pageable page = PageRequest.of(numberPage, 3);
-		
+
 		return ResponseEntity.ok(productRepository.findAll(page));
 	}
+	
+	/**
+	 * 
+	 * Atualiza um produto dentro do banco de dados
+	 * 
+	 * @param data
+	 * @return 200 ok
+	 */
 	
 	@PutMapping
 	@Transactional
 	public ResponseEntity<Product> updateProduct(@RequestBody @Valid RequestProduct data) {
 		Optional<Product> dataProduct = productRepository.findById(data.id());
-		
+
 		if (dataProduct.isPresent()) {
 			Product updatedProduct = dataProduct.get();
-			
+
 			updatedProduct.setName(data.name());
 			updatedProduct.setPrice(data.price());
 			updatedProduct.setDiscount(data.discount());
 			updatedProduct.setAvailable(data.available());
-			
-			
-			return ResponseEntity.ok().build();	
+
+			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping(path="/{id}")
+	/**
+	 * 
+	 * Executa um soft delete dentro da base de dados
+	 * 
+	 * @param id
+	 * @return 200ok
+	 */
+	
+	@DeleteMapping(path = "/{id}")
 	@Transactional
 	public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-		Optional<Product> dataProduct = productRepository.findById(id);		
-		
+		Optional<Product> dataProduct = productRepository.findById(id);
+
 		if (dataProduct.isPresent()) {
 			Product deletedProduct = dataProduct.get();
 			deletedProduct.setAvailable(false);
-			return ResponseEntity.ok().build();			
+			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
-	
+
 }

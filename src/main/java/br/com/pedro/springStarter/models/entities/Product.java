@@ -12,8 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 
 /**
  * 
- * Represetação de um Produto genérico qualquer utilizado dentro dos modelos do
- * exercicio
+ * Represetação de um Produto genérico utilizado dentro dos modelos do exercicio.
  * 
  * @author Pedro Henrique Pereira de Oliveira
  *
@@ -37,9 +36,9 @@ public class Product {
 	@Min(value = 0)
 	@Max(value = 1)
 	private double discount;
-	
+
 	private boolean available;
-	
+
 	public Product() {
 	}
 
@@ -105,6 +104,5 @@ public class Product {
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
-	
-	
-}	
+
+}
