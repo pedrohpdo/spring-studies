@@ -80,11 +80,17 @@ public class ProductController {
 	}
 	
 	@DeleteMapping(path="/{id}")
+	@Transactional
 	public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-		if (productRepository.existsById(id)) {
-			productRepository.deleteById(id);
+		
+		Optional<Product> dataProduct = productRepository.findById(id);
+		
+		if (dataProduct.isPresent()) {
+			Product deletedProduct = dataProduct.get();
+			deletedProduct.setActive(false);
 			return ResponseEntity.ok().build();			
 		}
+		
 		return ResponseEntity.notFound().build();
 	}
 	
