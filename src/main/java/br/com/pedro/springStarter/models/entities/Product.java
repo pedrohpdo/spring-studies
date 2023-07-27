@@ -55,7 +55,7 @@ public class Product {
 		this.name = requestProd.name();
 		this.price = requestProd.price();
 		this.discount = requestProd.discount();
-		this.available = requestProd.active();
+		this.available = true;
 	}
 
 	public Long getId() {

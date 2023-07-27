@@ -1,3 +1,3 @@
-ALTER TABLE products_table ADD active boolean;
+ALTER TABLE products_table active boolean;
 
-UPDATE products_table set active = true;
+v
