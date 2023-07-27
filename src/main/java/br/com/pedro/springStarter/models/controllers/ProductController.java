@@ -45,7 +45,7 @@ public class ProductController {
 	
 	@GetMapping
 	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts() {
-		return ResponseEntity.ok(productRepository.findAll());
+		return ResponseEntity.ok(productRepository.findAllByAvailableTrue());
 	}
 	
 	@GetMapping(path="/{id}")
