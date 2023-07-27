@@ -9,5 +9,6 @@ import br.com.pedro.springStarter.models.entities.Product;
 
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long>, CrudRepository<Product, Long>, JpaRepository<Product, Long>{
-
+	
+	Iterable<Product> findAllByAvailableTrue();
 }
