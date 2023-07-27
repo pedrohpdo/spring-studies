@@ -73,7 +73,6 @@ public class ProductController {
 			updatedProduct.setName(data.name());
 			updatedProduct.setPrice(data.price());
 			updatedProduct.setDiscount(data.discount());
-			productRepository.save(updatedProduct);
 			
 			return ResponseEntity.ok().build();	
 		}
@@ -82,8 +81,11 @@ public class ProductController {
 	
 	@DeleteMapping(path="/{id}")
 	public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-		productRepository.deleteById(id);
-		return ResponseEntity.ok().build();
+		if (productRepository.existsById(id)) {
+			productRepository.deleteById(id);
+			return ResponseEntity.ok().build();			
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	
