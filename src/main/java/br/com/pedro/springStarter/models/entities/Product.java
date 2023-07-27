@@ -47,6 +47,12 @@ public class Product {
 		this.discount = discount;
 	}
 
+	public Product(RequestProduct requestProd) {
+		this.name = requestProd.name();
+		this.price = requestProd.price();
+		this.discount = requestProd.discount();
+	}
+
 	public Long getId() {
 		return id;
 	}

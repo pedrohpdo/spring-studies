@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pedro.springStarter.models.entities.Product;
+import br.com.pedro.springStarter.models.entities.RequestProduct;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import jakarta.validation.Valid;
 
@@ -34,14 +36,14 @@ public class ProductController {
 	ProductRepository productRepository;
 
 	@PostMapping
-	public ResponseEntity<Product> newProduct(@Valid Product newProduct) {
+	public @ResponseBody ResponseEntity<Product> addProduct(@RequestBody @Valid RequestProduct requestedProduct) {
+		Product newProduct = new Product(requestedProduct);
 		productRepository.save(newProduct);
 		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping
-	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts(){
-		
+	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts() {
 		return ResponseEntity.ok(productRepository.findAll());
 	}
 	
