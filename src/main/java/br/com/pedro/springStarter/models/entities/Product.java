@@ -90,11 +90,11 @@ public class Product {
 		this.name = name;
 	}
 
-	public boolean isActive() {
+	public boolean isAvailable() {
 		return available;
 	}
 
-	public void setActive(boolean active) {
+	public void setAvailable(boolean active) {
 		this.available = active;
 	}
 

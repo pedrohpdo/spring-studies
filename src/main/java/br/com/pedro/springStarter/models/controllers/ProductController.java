@@ -73,6 +73,8 @@ public class ProductController {
 			updatedProduct.setName(data.name());
 			updatedProduct.setPrice(data.price());
 			updatedProduct.setDiscount(data.discount());
+			updatedProduct.setAvailable(data.available());
+			
 			
 			return ResponseEntity.ok().build();	
 		}
@@ -82,15 +84,13 @@ public class ProductController {
 	@DeleteMapping(path="/{id}")
 	@Transactional
 	public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-		
-		Optional<Product> dataProduct = productRepository.findById(id);
+		Optional<Product> dataProduct = productRepository.findById(id);		
 		
 		if (dataProduct.isPresent()) {
 			Product deletedProduct = dataProduct.get();
-			deletedProduct.setActive(false);
+			deletedProduct.setAvailable(false);
 			return ResponseEntity.ok().build();			
 		}
-		
 		return ResponseEntity.notFound().build();
 	}
 	
