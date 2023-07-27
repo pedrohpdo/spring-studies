@@ -10,6 +10,15 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * 
+ * Represetação de um Produto genérico qualquer utilizado dentro dos modelos do
+ * exercicio
+ * 
+ * @author Pedro Henrique Pereira de Oliveira
+ *
+ */
+
 @Entity
 @Table(name = "products_table")
 public class Product {
@@ -17,14 +26,14 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	@Column(nullable = false, length = 30)
 	private String name;
-	
+
 	@Min(value = 0)
 	private double price;
-	
+
 	@Min(value = 0)
 	@Max(value = 1)
 	private double discount;
