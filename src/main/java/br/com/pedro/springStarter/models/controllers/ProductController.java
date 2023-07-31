@@ -21,6 +21,7 @@ import br.com.pedro.springStarter.exception.ObjectNotFoundException;
 import br.com.pedro.springStarter.models.entities.Product;
 import br.com.pedro.springStarter.models.entities.RequestProduct;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
+import br.com.pedro.springStarter.service.ProductService;
 import jakarta.validation.Valid;
 
 /**
@@ -37,6 +38,8 @@ public class ProductController {
 	@Autowired
 	ProductRepository productRepository;
 	
+	@Autowired
+	ProductService productService;
 	/**
 	 * 
 	 * Persist a valid Product object on the database
