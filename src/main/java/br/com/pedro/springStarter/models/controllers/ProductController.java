@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.pedro.springStarter.exception.ObjectNotFoundException;
 import br.com.pedro.springStarter.models.entities.Product;
 import br.com.pedro.springStarter.models.entities.RequestProduct;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
@@ -35,59 +34,32 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/produtos")
 public class ProductController {
 
-	@Autowired
-	ProductRepository productRepository;
 	
 	@Autowired
 	ProductService productService;
-	/**
-	 * 
-	 * Persist a valid Product object on the database
-	 * 
-	 * @param requestedProduct
-	 * @return 200ok
-	 */
-	
+
+	@Autowired
+	ProductRepository productRepository;
+		
 	@PostMapping
 	public @ResponseBody ResponseEntity<Product> addProduct(@RequestBody @Valid RequestProduct requestedProduct) {
 		Product newProduct = new Product(requestedProduct);
 		productRepository.save(newProduct);
 		return ResponseEntity.ok().build();
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	
+		
 	@GetMapping
 	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts() {
-		return ResponseEntity.ok(productRepository.findAllByAvailableTrue());
+		return ResponseEntity.ok(productService.getProducts());
 	}
-	
-	/**
-	 * 
-	 * Returns um produto baseado no seu id de registro
-	 *  
-	 * @param id
-	 * @return
-	 */
 	
 	@GetMapping(path = "/{id}")
 	public @ResponseBody Product getProductById(@PathVariable Long id) {
 		
-		return productRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
+		return productService.getProductById(id);
 		
 	}
-	
-	/**
-	 * 
-	 * Retorna uma consulta paginada de 3 produtos por página
-	 * 
-	 * @param numberPage
-	 * @return 200 ok
-	 */
-	
+		
 	@GetMapping(path = "/page/{numberPage}")
 	public @ResponseBody ResponseEntity<Iterable<Product>> getPages(@PathVariable int numberPage) {
 		Pageable page = PageRequest.of(numberPage, 3);
@@ -95,39 +67,15 @@ public class ProductController {
 		return ResponseEntity.ok(productRepository.findAll(page));
 	}
 	
-	/**
-	 * 
-	 * Atualiza um produto dentro do banco de dados
-	 * 
-	 * @param data
-	 * @return 200 ok
-	 */
 	
 	@PutMapping
 	@Transactional
 	public ResponseEntity<Product> updateProduct(@RequestBody @Valid RequestProduct data) {
-		Optional<Product> dataProduct = productRepository.findById(data.id());
-
-		if (dataProduct.isPresent()) {
-			Product updatedProduct = dataProduct.get();
-
-			updatedProduct.setName(data.name());
-			updatedProduct.setPrice(data.price());
-			updatedProduct.setDiscount(data.discount());
-			updatedProduct.setAvailable(data.available());
-
-			return ResponseEntity.ok().build();
-		}
-		return ResponseEntity.notFound().build();
+		
+		return productService.updateProduct(data)
+				.map(updatedProduct -> ResponseEntity.ok(updatedProduct))
+				.orElse(ResponseEntity.notFound().build());
 	}
-	
-	/**
-	 * 
-	 * Executa um soft delete dentro da base de dados
-	 * 
-	 * @param id
-	 * @return 200ok
-	 */
 	
 	@DeleteMapping(path = "/{id}")
 	@Transactional
