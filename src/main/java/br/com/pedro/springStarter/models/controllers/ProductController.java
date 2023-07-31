@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.pedro.springStarter.exception.ObjectNotFoundException;
 import br.com.pedro.springStarter.models.entities.Product;
 import br.com.pedro.springStarter.models.entities.RequestProduct;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
@@ -70,10 +71,10 @@ public class ProductController {
 	 */
 	
 	@GetMapping(path = "/{id}")
-	public @ResponseBody ResponseEntity<Product> getProductById(@RequestBody @PathVariable Long id) {
-		Optional<Product> prod = productRepository.findById(id);
-
-		return prod.isPresent() ? ResponseEntity.ok(prod.get()) : ResponseEntity.noContent().build();
+	public @ResponseBody Product getProductById(@PathVariable Long id) {
+		
+		return productRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
+		
 	}
 	
 	/**
