@@ -5,9 +5,9 @@ Repositório criado com o intuito de documentar alguns conhecimentos iniciais co
 Obviamente eu utilizei algumas referências externas para me guiar durante essa jornada de aprendizo. Sendo tudo gratuito, vou deixar os links para tudo o que consumi e estou consumindo durante esse processo:
 
 #### Loiane Groner
-[Github](https://github.com/loiane)
-
 [Playlist do Curso Angular + Spring](https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY)
+
+[Repositório](https://github.com/loiane/curso-angular)
 
 
 #### Fernanda Kippler
