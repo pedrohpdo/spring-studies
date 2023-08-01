@@ -1,5 +1,7 @@
 package br.com.pedro.springStarter.models.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,15 +48,13 @@ public class ProductController {
 	}
 		
 	@GetMapping
-	public @ResponseBody ResponseEntity<Iterable<Product>> get() {
+	public @ResponseBody ResponseEntity<List<Product>> get() {
 		return ResponseEntity.ok(productService.get());
 	}
 	
 	@GetMapping(path = "/{id}")
 	public @ResponseBody Product get(@PathVariable Long id) {
-		
 		return productService.get(id);
-		
 	}
 		
 	@GetMapping(path = "/page/{numberPage}")
@@ -66,20 +66,16 @@ public class ProductController {
 	
 	@PutMapping
 	@Transactional
-	public ResponseEntity<Product> update(@RequestBody @Valid RequestProduct data) {
+	public Product update(@RequestBody @Valid RequestProduct data) {
 		
-		return productService.update(data)
-				.map(updatedProduct -> ResponseEntity.ok(updatedProduct))
-				.orElse(ResponseEntity.notFound().build());
+		return productService.update(data);
 	}
 	
 	@DeleteMapping(path = "/{id}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@Transactional
-	public ResponseEntity<Product> delete(@PathVariable Long id) {
-		if (productService.delete(id)) {
-			return ResponseEntity.ok().build();
-		}
-		return ResponseEntity.notFound().build();
+	public void delete(@PathVariable Long id) {
+		productService.delete(id);
 	}
 
 }

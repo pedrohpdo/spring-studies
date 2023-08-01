@@ -1,5 +1,6 @@
 package br.com.pedro.springStarter.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.pedro.springStarter.exception.ObjectNotFoundException;
+import br.com.pedro.springStarter.exception.RecordNotFoundException;
 import br.com.pedro.springStarter.models.entities.Product;
 import br.com.pedro.springStarter.models.entities.RequestProduct;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
@@ -25,12 +26,12 @@ public class ProductService {
 		return newProduct;
 	}
 	
-	public Iterable<Product> get() {
-		return productRepository.findAllByAvailableTrue();
+	public List<Product> get() {
+		return (List<Product>) productRepository.findAllByAvailableTrue();
 	}
 	
 	public Product get(Long id) {
-		return productRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id));
+		return productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
 	}
 	
 	public Iterable<Product> getByPage(int numberPage) {
@@ -38,7 +39,7 @@ public class ProductService {
 		return productRepository.findAll(page);
 	}
 	
-	public Optional<Product> update(@Valid RequestProduct data) {
+	public Product update(@Valid RequestProduct data) {
 		
 		return productRepository.findById(data.id())
 				.map(updatedProduct -> {
@@ -48,18 +49,17 @@ public class ProductService {
 					updatedProduct.setAvailable(data.available());
 					
 					return updatedProduct;
-				});
+				})
+				.orElseThrow(() -> new RecordNotFoundException(data.id()));
 	}
 	
 	/**
 	 * soft delete
 	 */
-	public boolean delete(Long id) {
+	public void delete(Long id) {
 		
-		return productRepository.findById(id)
-				.map(recordFound -> {
-					recordFound.setAvailable(false);
-					return true;
-				}).orElse(false);
+		productRepository.delete(productRepository.findById(id)
+				.orElseThrow(() -> new RecordNotFoundException(id)));
+		
 	}
 }

@@ -1,5 +1,7 @@
 package br.com.pedro.springStarter.models.entities;
 
+import org.hibernate.annotations.SQLDelete;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "products_table")
+@SQLDelete(sql = "UPDATE products_table set available = false WHERE id = ?")
 public class Product {
 
 	@Id
