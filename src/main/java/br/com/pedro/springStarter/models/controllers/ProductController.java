@@ -1,7 +1,5 @@
 package br.com.pedro.springStarter.models.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -80,11 +78,7 @@ public class ProductController {
 	@DeleteMapping(path = "/{id}")
 	@Transactional
 	public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-		Optional<Product> dataProduct = productRepository.findById(id);
-
-		if (dataProduct.isPresent()) {
-			Product deletedProduct = dataProduct.get();
-			deletedProduct.setAvailable(false);
+		if (productService.deleteProductById(id)) {
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();

@@ -17,11 +17,6 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	/**
-	 * 
-	 * @return
-	 */
-
 	public Iterable<Product> getProducts() {
 		return productRepository.findAllByAvailableTrue();
 	}
@@ -41,5 +36,17 @@ public class ProductService {
 					
 					return updatedProduct;
 				});
+	}
+	
+	/**
+	 * soft delete
+	 */
+	public boolean deleteProductById(Long id) {
+		
+		return productRepository.findById(id)
+				.map(recordFound -> {
+					recordFound.setAvailable(false);
+					return true;
+				}).orElse(false);
 	}
 }
