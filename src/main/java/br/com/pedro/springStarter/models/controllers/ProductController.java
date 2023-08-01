@@ -1,8 +1,6 @@
 package br.com.pedro.springStarter.models.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,37 +46,36 @@ public class ProductController {
 		
 	@GetMapping
 	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts() {
-		return ResponseEntity.ok(productService.getProducts());
+		return ResponseEntity.ok(productService.get());
 	}
 	
 	@GetMapping(path = "/{id}")
 	public @ResponseBody Product getProductById(@PathVariable Long id) {
 		
-		return productService.getProductById(id);
+		return productService.get(id);
 		
 	}
 		
 	@GetMapping(path = "/page/{numberPage}")
-	public @ResponseBody ResponseEntity<Iterable<Product>> getPages(@PathVariable int numberPage) {
-		Pageable page = PageRequest.of(numberPage, 3);
-
-		return ResponseEntity.ok(productRepository.findAll(page));
+	public @ResponseBody ResponseEntity<Iterable<Product>> getByPage(@PathVariable int numberPage) {
+		
+		return ResponseEntity.ok(productService.getByPage(numberPage));
 	}
 	
 	
 	@PutMapping
 	@Transactional
-	public ResponseEntity<Product> updateProduct(@RequestBody @Valid RequestProduct data) {
+	public ResponseEntity<Product> update(@RequestBody @Valid RequestProduct data) {
 		
-		return productService.updateProduct(data)
+		return productService.update(data)
 				.map(updatedProduct -> ResponseEntity.ok(updatedProduct))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	@Transactional
-	public ResponseEntity<Product> deleteProductById(@PathVariable Long id) {
-		if (productService.deleteProductById(id)) {
+	public ResponseEntity<Product> delete(@PathVariable Long id) {
+		if (productService.delete(id)) {
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
