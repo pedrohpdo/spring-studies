@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.pedro.springStarter.models.entities.Product;
 import br.com.pedro.springStarter.models.entities.ProductDTO;
-import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import br.com.pedro.springStarter.service.ProductService;
 import jakarta.validation.Valid;
 
@@ -36,46 +34,42 @@ public class ProductController {
 
 	
 	@Autowired
-	ProductService productService;
-
-	@Autowired
-	ProductRepository productRepository;
+	private ProductService productService;
 		
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public @ResponseBody ResponseEntity<Product> create(@RequestBody @Valid ProductDTO requestedProduct) {
+	public @ResponseBody ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductDTO requestedProduct) {
 		return ResponseEntity.ok(productService.create(requestedProduct));
 	}
 		
 	@GetMapping
-	public @ResponseBody ResponseEntity<List<Product>> get() {
+	public @ResponseBody ResponseEntity<List<ProductDTO>> get() {
 		return ResponseEntity.ok(productService.get());
 	}
 	
 	@GetMapping(path = "/{id}")
-	public @ResponseBody Product get(@PathVariable Long id) {
-		return productService.get(id);
+	public @ResponseBody ResponseEntity<ProductDTO> get(@PathVariable Long id) {
+		return ResponseEntity.ok(productService.get(id));
 	}
 		
 	@GetMapping(path = "/page/{numberPage}")
-	public @ResponseBody ResponseEntity<Iterable<Product>> getByPage(@PathVariable int numberPage) {
-		
+	public @ResponseBody ResponseEntity<Iterable<ProductDTO>> getByPage(@PathVariable int numberPage) {
+
 		return ResponseEntity.ok(productService.getByPage(numberPage));
 	}
 	
 	
 	@PutMapping
 	@Transactional
-	public Product update(@RequestBody @Valid ProductDTO data) {
-		
-		return productService.update(data);
+	public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO data) {
+		return ResponseEntity.ok(productService.update(data));
 	}
 	
 	@DeleteMapping(path = "/{id}")
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@Transactional
-	public void delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		productService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }

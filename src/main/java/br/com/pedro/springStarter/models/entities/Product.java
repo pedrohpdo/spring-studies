@@ -52,32 +52,8 @@ public class Product {
 		this.available = true;
 	}
 
-	public Product(ProductDTO requestProd) {
-		this.id = requestProd.id();
-		this.name = requestProd.name();
-		this.price = requestProd.price();
-		this.discount = requestProd.discount();
-		this.available = true;
-	}
-
 	public Long getId() {
 		return id;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public Double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(Double discount) {
-		this.discount = discount;
 	}
 
 	public void setId(Long id) {
@@ -92,20 +68,30 @@ public class Product {
 		this.name = name;
 	}
 
-	public boolean isAvailable() {
-		return available;
-	}
-
-	public void setAvailable(boolean active) {
-		this.available = active;
+	public double getPrice() {
+		return price;
 	}
 
 	public void setPrice(double price) {
 		this.price = price;
 	}
 
+	public double getDiscount() {
+		return discount;
+	}
+
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
 
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
+	}
+
+	
+	
 }

@@ -1,44 +1,56 @@
 package br.com.pedro.springStarter.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.pedro.springStarter.ProductMapper;
 import br.com.pedro.springStarter.exception.RecordNotFoundException;
-import br.com.pedro.springStarter.models.entities.Product;
 import br.com.pedro.springStarter.models.entities.ProductDTO;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import jakarta.validation.Valid;
 
 @Service
 public class ProductService {
-
+	
+	@Autowired
+	private ProductMapper productMapper;
+	
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public Product create(@Valid ProductDTO requestedProduct) {
-		Product newProduct = new Product(requestedProduct);
-		productRepository.save(newProduct);
-		return newProduct;
+	public ProductDTO create(@Valid ProductDTO product) {
+		return productMapper.toDTO(productRepository.save(productMapper.toEntity(product)));
 	}
 	
-	public List<Product> get() {
-		return productRepository.findAllByAvailableTrue();
+	public List<ProductDTO> get() {
+		return productRepository.findAllByAvailableTrue()
+				.stream()
+				.map(productMapper::toDTO)
+				.collect(Collectors.toList());
 	}
 	
-	public Product get(Long id) {
-		return productRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
-	}
+	public ProductDTO get(Long id) {
+		return productRepository.findById(id)
+				.map(p -> productMapper.toDTO(p))
+				.orElseThrow(() -> new RecordNotFoundException(id));
+	} 
 	
-	public Iterable<Product> getByPage(int numberPage) {
+	public List<ProductDTO> getByPage(int numberPage) {
 		Pageable page = PageRequest.of(numberPage, 3);
-		return productRepository.findAll(page);
+		List<ProductDTO> result = productRepository.findAll(page)
+				.stream()
+				.map(productMapper::toDTO)
+				.collect(Collectors.toList());
+		
+		return result;
 	}
 	
-	public Product update(@Valid ProductDTO data) {
+	public ProductDTO update(@Valid ProductDTO data) {
 		
 		return productRepository.findById(data.id())
 				.map(updatedProduct -> {
@@ -47,7 +59,7 @@ public class ProductService {
 					updatedProduct.setDiscount(data.discount());
 					updatedProduct.setAvailable(data.available());
 					
-					return updatedProduct;
+					return productMapper.toDTO(updatedProduct);
 				})
 				.orElseThrow(() -> new RecordNotFoundException(data.id()));
 	}
@@ -56,7 +68,6 @@ public class ProductService {
 	 * soft delete
 	 */
 	public void delete(Long id) {
-		
 		productRepository.delete(productRepository.findById(id)
 				.orElseThrow(() -> new RecordNotFoundException(id)));
 		
