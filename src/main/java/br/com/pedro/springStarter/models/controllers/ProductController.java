@@ -38,19 +38,19 @@ public class ProductController {
 	ProductRepository productRepository;
 		
 	@PostMapping
-	public @ResponseBody ResponseEntity<Product> addProduct(@RequestBody @Valid RequestProduct requestedProduct) {
+	public @ResponseBody ResponseEntity<Product> create(@RequestBody @Valid RequestProduct requestedProduct) {
 		Product newProduct = new Product(requestedProduct);
 		productRepository.save(newProduct);
 		return ResponseEntity.ok().build();
 	}
 		
 	@GetMapping
-	public @ResponseBody ResponseEntity<Iterable<Product>> getProducts() {
+	public @ResponseBody ResponseEntity<Iterable<Product>> get() {
 		return ResponseEntity.ok(productService.get());
 	}
 	
 	@GetMapping(path = "/{id}")
-	public @ResponseBody Product getProductById(@PathVariable Long id) {
+	public @ResponseBody Product get(@PathVariable Long id) {
 		
 		return productService.get(id);
 		
