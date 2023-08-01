@@ -18,7 +18,13 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-
+	
+	public Product create(@Valid RequestProduct requestedProduct) {
+		Product newProduct = new Product(requestedProduct);
+		productRepository.save(newProduct);
+		return newProduct;
+	}
+	
 	public Iterable<Product> get() {
 		return productRepository.findAllByAvailableTrue();
 	}

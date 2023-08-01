@@ -1,6 +1,7 @@
 package br.com.pedro.springStarter.models.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pedro.springStarter.models.entities.Product;
@@ -38,10 +40,9 @@ public class ProductController {
 	ProductRepository productRepository;
 		
 	@PostMapping
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public @ResponseBody ResponseEntity<Product> create(@RequestBody @Valid RequestProduct requestedProduct) {
-		Product newProduct = new Product(requestedProduct);
-		productRepository.save(newProduct);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(productService.create(requestedProduct));
 	}
 		
 	@GetMapping
