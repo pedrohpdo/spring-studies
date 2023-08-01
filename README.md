@@ -18,3 +18,7 @@ Obviamente eu utilizei algumas referências externas para me guiar durante essa 
 [Live Coding: CRUD com Java Spring](https://www.youtube.com/watch?v=tP6wtEaCnSI&t=5957s)
 
 [Live Coding: Continuação API REST com Java Spring](https://www.youtube.com/watch?v=HanaSiIlMVY&list=RDCMUCpKvMmsF6QrkVr_zWaLGK-A&index=5)
+
+
+#### Lucas Ângelo
+[Curso API RESTful com Spring Boot 2022 (Java Web)](https://www.youtube.com/playlist?list=PLiXotHlANc8ptwP6wajo73OZo9Nh5i597)
