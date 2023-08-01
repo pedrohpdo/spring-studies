@@ -1,4 +1,4 @@
-package br.com.pedro.springStarter;
+package br.com.pedro.springStarter.mapper;
 
 import org.springframework.stereotype.Component;
 

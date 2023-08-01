@@ -8,8 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.pedro.springStarter.ProductMapper;
 import br.com.pedro.springStarter.exception.RecordNotFoundException;
+import br.com.pedro.springStarter.mapper.ProductMapper;
 import br.com.pedro.springStarter.models.entities.ProductDTO;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import jakarta.validation.Valid;
