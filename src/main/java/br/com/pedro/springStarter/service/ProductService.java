@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.pedro.springStarter.exception.RecordNotFoundException;
 import br.com.pedro.springStarter.models.entities.Product;
-import br.com.pedro.springStarter.models.entities.RequestProduct;
+import br.com.pedro.springStarter.models.entities.ProductDTO;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import jakarta.validation.Valid;
 
@@ -19,14 +19,14 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public Product create(@Valid RequestProduct requestedProduct) {
+	public Product create(@Valid ProductDTO requestedProduct) {
 		Product newProduct = new Product(requestedProduct);
 		productRepository.save(newProduct);
 		return newProduct;
 	}
 	
 	public List<Product> get() {
-		return (List<Product>) productRepository.findAllByAvailableTrue();
+		return productRepository.findAllByAvailableTrue();
 	}
 	
 	public Product get(Long id) {
@@ -38,7 +38,7 @@ public class ProductService {
 		return productRepository.findAll(page);
 	}
 	
-	public Product update(@Valid RequestProduct data) {
+	public Product update(@Valid ProductDTO data) {
 		
 		return productRepository.findById(data.id())
 				.map(updatedProduct -> {

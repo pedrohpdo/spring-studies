@@ -52,7 +52,7 @@ public class Product {
 		this.available = true;
 	}
 
-	public Product(RequestProduct requestProd) {
+	public Product(ProductDTO requestProd) {
 		this.id = requestProd.id();
 		this.name = requestProd.name();
 		this.price = requestProd.price();

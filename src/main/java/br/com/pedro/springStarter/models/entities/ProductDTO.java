@@ -10,7 +10,8 @@ import jakarta.validation.constraints.NotBlank;
  * @author Pedro Henrique Pereira de Oliveira
  * @since 27 de jul. de 2023
  */
-public record RequestProduct(Long id,
+
+public record ProductDTO(Long id,
 
 		@NotBlank String name,
 

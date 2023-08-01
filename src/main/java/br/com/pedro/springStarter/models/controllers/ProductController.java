@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.pedro.springStarter.models.entities.Product;
-import br.com.pedro.springStarter.models.entities.RequestProduct;
+import br.com.pedro.springStarter.models.entities.ProductDTO;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import br.com.pedro.springStarter.service.ProductService;
 import jakarta.validation.Valid;
@@ -43,7 +43,7 @@ public class ProductController {
 		
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public @ResponseBody ResponseEntity<Product> create(@RequestBody @Valid RequestProduct requestedProduct) {
+	public @ResponseBody ResponseEntity<Product> create(@RequestBody @Valid ProductDTO requestedProduct) {
 		return ResponseEntity.ok(productService.create(requestedProduct));
 	}
 		
@@ -66,7 +66,7 @@ public class ProductController {
 	
 	@PutMapping
 	@Transactional
-	public Product update(@RequestBody @Valid RequestProduct data) {
+	public Product update(@RequestBody @Valid ProductDTO data) {
 		
 		return productService.update(data);
 	}
