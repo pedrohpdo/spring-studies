@@ -58,7 +58,6 @@ public class ProductController {
 		return ResponseEntity.ok(productService.getByPage(numberPage));
 	}
 	
-	
 	@PutMapping
 	@Transactional
 	public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO data) {
