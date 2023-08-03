@@ -1,11 +1,15 @@
 package br.com.pedro.springStarter.models.controllers;
 
+import java.time.Instant;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.com.pedro.springStarter.exception.RecordNotFoundException;
+import br.com.pedro.springStarter.exception.StandartError;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Controller sugestivo para como Exceções podem ser tratadas
@@ -18,8 +22,15 @@ import br.com.pedro.springStarter.exception.RecordNotFoundException;
 public class ApplicationControllerAdvice {
 
 	@ExceptionHandler(RecordNotFoundException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public String handleNotFoundException(RecordNotFoundException exception) {
-		return exception.getMessage();
+	public ResponseEntity<StandartError> handleNotFoundException(RecordNotFoundException exception, HttpServletRequest e) {
+		StandartError result = new StandartError();
+		
+		result.setInstant(Instant.now());
+		result.setStatus(HttpStatus.NOT_FOUND.value());
+		result.setError("Record Not Found");
+		result.setMessage(exception.getMessage());
+		result.setPath(e.getRequestURI());
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
 }
