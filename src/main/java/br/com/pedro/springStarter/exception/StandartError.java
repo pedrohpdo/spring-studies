@@ -10,8 +10,11 @@ public class StandartError {
 	private String message;
 	private String path;
 
-	public StandartError() {
-
+	public StandartError(Integer status, String error, String message, String path) {
+		this.instant = Instant.now();
+		this.error = error;
+		this.message = message;
+		this.path = path;
 	}
 
 	public Instant getInstant() {
