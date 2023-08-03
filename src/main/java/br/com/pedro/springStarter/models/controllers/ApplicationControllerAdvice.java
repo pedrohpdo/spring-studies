@@ -39,8 +39,18 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 												exception.getMessage(),
 												request.getRequestURI());
 
-		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(result);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
 	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Object> handleGenericException(Exception e, HttpServletRequest request) {
+		StandartError result = new StandartError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+												"Unknown Problem Ocurred",
+												e.getMessage(),
+												request.getRequestURI());
+		
+		return ResponseEntity.internalServerError().body(result);
+		
+	}
 	
 }

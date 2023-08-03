@@ -30,7 +30,7 @@ public class Product {
 	private Long id;
 
 	@NotBlank
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, unique = true)
 	private String name;
 
 	@Min(value = 0)

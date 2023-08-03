@@ -12,6 +12,7 @@ public class StandartError {
 
 	public StandartError(Integer status, String error, String message, String path) {
 		this.instant = Instant.now();
+		this.status = status;
 		this.error = error;
 		this.message = message;
 		this.path = path;
