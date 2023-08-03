@@ -32,3 +32,6 @@ Obviamente eu utilizei algumas referências externas para me guiar durante essa 
 
 #### Lucas Ângelo
 [Curso API RESTful com Spring Boot 2022 (Java Web)](https://www.youtube.com/playlist?list=PLiXotHlANc8ptwP6wajo73OZo9Nh5i597)
+
+#### Nelio Alves
+[Canal Dev Superior - Escola de Programação](https://www.youtube.com/@DevSuperior)
