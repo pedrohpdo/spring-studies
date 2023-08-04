@@ -37,7 +37,7 @@ public class ProductService {
 	public ProductDTO get(Long id) {
 		return productRepository.findById(id)
 				.map(p -> productMapper.toDTO(p))
-				.orElseThrow(() -> new RecordNotFoundException(id));
+				.orElseThrow(() -> new RecordNotFoundException());
 	} 
 	
 	public List<ProductDTO> getByPage(int numberPage) {
@@ -60,7 +60,7 @@ public class ProductService {
 					
 					return productMapper.toDTO(updatedProduct);
 				})
-				.orElseThrow(() -> new RecordNotFoundException(data.id()));
+				.orElseThrow(() -> new RecordNotFoundException());
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class ProductService {
 	 */
 	public void delete(Long id) {
 		productRepository.delete(productRepository.findById(id)
-				.orElseThrow(() -> new RecordNotFoundException(id)));
+				.orElseThrow(() -> new RecordNotFoundException()));
 		
 	}
 }
