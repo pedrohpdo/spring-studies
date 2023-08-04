@@ -1,14 +1,21 @@
 package br.com.pedro.springStarter.models.controllers;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.pedro.springStarter.exception.ErrorResponse;
 import br.com.pedro.springStarter.exception.RecordNotFoundException;
-import br.com.pedro.springStarter.exception.StandartError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j(topic = "APPLICATION_EXCEPTION_HANDLER") // adiciona a anotação no console
 @RestControllerAdvice
 public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler {
-	
+
 	/**
 	 * 
 	 * @param e
@@ -31,16 +38,15 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleGenericException(Exception e, HttpServletRequest request) {
-		
-		StandartError result = new StandartError(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-				"Unknown Problem Ocurred",
-				e.getMessage(),
-				request.getRequestURI());
-		
+
+		ErrorResponse result = new ErrorResponse(
+				HttpStatus.INTERNAL_SERVER_ERROR.value(),
+				"Unknown Problem Ocurred");
+
 		logger.error("Unknown Problem Ocurred", e);
-		
+
 		return ResponseEntity.internalServerError().body(result);
-		
+
 	}
 
 	/**
@@ -54,30 +60,68 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<Object> handleNotFoundException(RecordNotFoundException exception,
 			HttpServletRequest request) {
-		
-		StandartError result = new StandartError(HttpStatus.NOT_FOUND.value(),
-				"Record not Found",
-				exception.getMessage(),
-				request.getRequestURI());
-		
+
+		ErrorResponse result = new ErrorResponse(
+				HttpStatus.NOT_FOUND.value(),
+				exception.getMessage());
+
 		logger.error("Cannot Find Entity", exception);
-		
+
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
+
 	
-
+	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+	public ResponseEntity<Object> integrityConstrainException(
+			DataIntegrityViolationException exception,
+			WebRequest webRequest) {
+		
+		ErrorResponse response = new ErrorResponse(
+				HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				exception.getMostSpecificCause().getMessage()
+				);
+		
+		
+		logger.error("Cannot Validate Data", exception);
+		
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+		
+	}
+	
 	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<Object> handleDataViolatedExcepetion(DataIntegrityViolationException e,
-			HttpServletRequest request) {
+	public ResponseEntity<Object> handleDataIntegrityViolationException(
+			DataIntegrityViolationException exception,
+			WebRequest webRequest) {
 		
-		StandartError result = new StandartError(HttpStatus.CONFLICT.value(),
-				"Conflict Data",
-				e.getMostSpecificCause().getMessage(),
-				request.getRequestURI());
-
-		logger.error("Dados conflituosos dentro do sistema", e);
+		ErrorResponse response = new ErrorResponse(
+				HttpStatus.CONFLICT.value(),
+				exception.getMostSpecificCause().getMessage()
+				);
 		
-		return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
-
+		
+		logger.error("Dados conflituosos dentro do sistema", exception);
+		
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+		
+	}
+	
+	@Override
+	public ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException exception,
+			HttpHeaders headers,
+			HttpStatusCode status,
+			WebRequest webRequest) {
+		
+		ErrorResponse response = new ErrorResponse(
+				HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				"Invalid Arguments");
+		
+		logger.error("Invalid Data Params");
+		
+		for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
+			response.addValidationError(fieldError.getField(), fieldError.getDefaultMessage());
+		}
+		
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
 	}
 }
