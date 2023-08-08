@@ -10,13 +10,13 @@ public class ProductMapper {
 	
 	public ProductDTO toDTO(Product product) {
 		if (product == null) return null;
-	
+
 		return new ProductDTO(
 				product.getId(),
 				product.getName(),
 				product.getPrice(),
 				product.getDiscount(),
-				product.isAvailable()
+				true
 				);
 	}
 	

@@ -20,6 +20,5 @@ public record ProductDTO(Long id,
 		@Min(0) @Max(1) double discount,
 
 		boolean available
-
 ) {
 }

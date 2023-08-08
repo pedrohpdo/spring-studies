@@ -3,6 +3,10 @@ package br.com.pedro.springStarter.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.pedro.springStarter.models.entities.Product;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,16 +18,20 @@ import br.com.pedro.springStarter.mapper.ProductMapper;
 import br.com.pedro.springStarter.models.entities.ProductDTO;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import jakarta.validation.Valid;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
 	
 	@Autowired
 	private ProductMapper productMapper;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
+
+
+	private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
 	public ProductDTO create(@Valid ProductDTO product) {
 		return productMapper.toDTO(productRepository.save(productMapper.toEntity(product)));
 	}
@@ -43,25 +51,26 @@ public class ProductService {
 	
 	public List<ProductDTO> getByPage(int numberPage) {
 		Pageable page = PageRequest.of(numberPage, 3);
+
 		List<ProductDTO> result = productRepository.findAll(page)
 				.stream()
 				.map(productMapper::toDTO)
 				.collect(Collectors.toList());
-		
+
 		return result;
 	}
-	
+	@Transactional
 	public ProductDTO update(@Valid ProductDTO data) {
 		if (data.id() == null) throw new NullParamException("Id");
-		
+
 		return productRepository.findById(data.id())
 				.map(updatedProduct -> {
 					updatedProduct.setName(data.name());
 					updatedProduct.setPrice(data.price());
 					updatedProduct.setDiscount(data.discount());
-					updatedProduct.setAvailable(data.available());
-					
+
 					return productMapper.toDTO(updatedProduct);
+
 				})
 				.orElseThrow(() -> new RecordNotFoundException());
 	}
