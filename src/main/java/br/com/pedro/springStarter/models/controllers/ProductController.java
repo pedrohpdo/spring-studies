@@ -28,7 +28,7 @@ import jakarta.validation.Valid;
  *
  */
 
-@RestController
+@RestController()
 @RequestMapping("/api/produtos")
 public class ProductController {
 
