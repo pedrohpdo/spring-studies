@@ -2,6 +2,7 @@ package br.com.pedro.springStarter.models.controllers;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
+import br.com.pedro.springStarter.exception.NullParamException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestControllerAdvice
 public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler {
 
-	/**
-	 * 
-	 * @param e
-	 * @param request
-	 * @return
-	 */
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleGenericException(Exception e, HttpServletRequest request) {
 
@@ -49,14 +44,6 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 
 	}
 
-	/**
-	 * 
-	 * Intercepta uma exceção devido a não encontrar uma entidade no sistemas
-	 * 
-	 * @param exception RecordNotFoundException
-	 * @param request
-	 * @return status 404 + StandartError response
-	 */
 	@ExceptionHandler(RecordNotFoundException.class)
 	public ResponseEntity<Object> handleNotFoundException(RecordNotFoundException exception,
 			HttpServletRequest request) {
@@ -103,6 +90,21 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 		
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 		
+	}
+	
+	@ExceptionHandler(NullParamException.class)
+	public ResponseEntity<Object> handlerNullParamException(
+			NullParamException exception,
+			WebRequest request) {
+
+		ErrorResponse response = new ErrorResponse(
+				HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				exception.getMessage());
+
+		logger.error("Param must not be null");
+
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+
 	}
 	
 	@Override

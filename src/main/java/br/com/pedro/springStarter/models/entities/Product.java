@@ -1,5 +1,6 @@
 package br.com.pedro.springStarter.models.entities;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 
 import jakarta.persistence.Column;
@@ -11,6 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 
@@ -23,6 +26,9 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "products_table")
 @SQLDelete(sql = "UPDATE products_table set available = false WHERE id = ?")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Product {
 
 	@Id
@@ -42,56 +48,12 @@ public class Product {
 
 	private boolean available;
 
-	public Product() {
-	}
-
 	public Product(String name, double price, double discount) {
 		this.name = name;
 		this.price = price;
 		this.discount = discount;
 		this.available = true;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public double getDiscount() {
-		return discount;
-	}
-
-	public void setDiscount(double discount) {
-		this.discount = discount;
-	}
-
-	public boolean isAvailable() {
-		return available;
-	}
-
-	public void setAvailable(boolean available) {
-		this.available = available;
-	}
-
 	
 	
 }

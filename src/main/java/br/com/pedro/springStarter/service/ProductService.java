@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.pedro.springStarter.exception.NullParamException;
 import br.com.pedro.springStarter.exception.RecordNotFoundException;
 import br.com.pedro.springStarter.mapper.ProductMapper;
 import br.com.pedro.springStarter.models.entities.ProductDTO;
@@ -51,6 +52,8 @@ public class ProductService {
 	}
 	
 	public ProductDTO update(@Valid ProductDTO data) {
+		if (data.id() == null) throw new NullParamException("Id");
+		
 		return productRepository.findById(data.id())
 				.map(updatedProduct -> {
 					updatedProduct.setName(data.name());
