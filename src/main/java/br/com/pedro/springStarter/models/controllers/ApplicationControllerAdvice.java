@@ -2,7 +2,7 @@ package br.com.pedro.springStarter.models.controllers;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
-import br.com.pedro.springStarter.exception.NullParamException;
+import br.com.pedro.springStarter.infra.exception.NullParamException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.pedro.springStarter.exception.ErrorResponse;
-import br.com.pedro.springStarter.exception.RecordNotFoundException;
+import br.com.pedro.springStarter.infra.exception.ErrorResponse;
+import br.com.pedro.springStarter.infra.exception.RecordNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
