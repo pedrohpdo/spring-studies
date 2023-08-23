@@ -46,7 +46,6 @@ public class Product {
 	@Min(value = 0)
 	@Max(value = 1)
 	private double discount;
-
 	private boolean available;
 
 	public Product(String name, double price, double discount) {
