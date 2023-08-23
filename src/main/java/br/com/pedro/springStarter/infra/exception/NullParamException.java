@@ -1,4 +1,4 @@
-package br.com.pedro.springStarter.exception;
+package br.com.pedro.springStarter.infra.exception;
 
 
 import java.io.Serial;

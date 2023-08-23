@@ -1,4 +1,4 @@
-package br.com.pedro.springStarter.exception;
+package br.com.pedro.springStarter.infra.exception;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class ErrorResponse {
 	 * 
 	 * @param status
 	 * @param message
-	 * @param stackTrace
+	 *
 	 */
 	public ErrorResponse(Integer status, String message) {
 		this.instant = Instant.now();
