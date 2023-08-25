@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.pedro.springStarter.infra.exception.NullParamException;
 import br.com.pedro.springStarter.infra.exception.RecordNotFoundException;
 import br.com.pedro.springStarter.mapper.ProductMapper;
-import br.com.pedro.springStarter.models.entities.ProductDTO;
+import br.com.pedro.springStarter.models.entities.product.ProductDTO;
 import br.com.pedro.springStarter.models.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
