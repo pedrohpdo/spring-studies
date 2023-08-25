@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.pedro.springStarter.models.entities.Product;
+import br.com.pedro.springStarter.models.entities.product.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	
