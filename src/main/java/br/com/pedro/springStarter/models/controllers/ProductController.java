@@ -1,6 +1,5 @@
 package br.com.pedro.springStarter.models.controllers;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.pedro.springStarter.models.entities.ProductDTO;
+import br.com.pedro.springStarter.models.entities.product.ProductDTO;
 import br.com.pedro.springStarter.service.ProductService;
 import jakarta.validation.Valid;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Controller responsável por determinar as funções da api
