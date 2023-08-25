@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j(topic = "APPLICATION_EXCEPTION_HANDLER") // adiciona a anotação no console
 @RestControllerAdvice
-public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler {
+public class AppControllerAdvice extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleGenericException(Exception e, HttpServletRequest request) {
@@ -52,7 +52,7 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 				HttpStatus.NOT_FOUND.value(),
 				exception.getMessage());
 
-		logger.error("Cannot Find Entity", exception);
+		log.error("Cannot Find Entity", exception);
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 	}
@@ -69,7 +69,7 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 				);
 		
 		
-		logger.error("Cannot Validate Data", exception);
+		log.error("Cannot Validate Data", exception);
 		
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
 		
@@ -86,7 +86,7 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 				);
 		
 		
-		logger.error("Dados conflituosos dentro do sistema", exception);
+		log.error("Dados conflituosos dentro do sistema", exception);
 		
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 		
@@ -118,7 +118,7 @@ public class ApplicationControllerAdvice extends ResponseEntityExceptionHandler 
 				HttpStatus.UNPROCESSABLE_ENTITY.value(),
 				"Invalid Arguments");
 		
-		logger.error("Invalid Data Params");
+		log.error("Invalid Data Params");
 		
 		for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
 			response.addValidationError(fieldError.getField(), fieldError.getDefaultMessage());
