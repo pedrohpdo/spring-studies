@@ -1,4 +1,4 @@
-package br.com.pedro.springStarter.models.entities;
+package br.com.pedro.springStarter.models.entities.product;
 
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -14,7 +14,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SQLUpdate;
 
 /**
  * 
