@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +21,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
+	
+	private static final long serialVersionUID = 1L;
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -46,7 +47,12 @@ public class User implements UserDetails {
     public String getUsername() {
         return this.email;
     }
-
+    
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
+    
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -66,4 +72,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
