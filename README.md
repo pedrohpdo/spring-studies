@@ -1,18 +1,31 @@
-# Salve!
-Repositório criado com o intuito de documentar alguns conhecimentos iniciais com o framework Spring utilizando a linguagem Java. Confesso que sempre gostei do mundo Orientado a Objetos e Java tem sido meu queridinho desde que comecei a estudar programação.
+<div align="center">
+  <img alt="Java" src="https://img.shields.io/badge/Java-B1361E?style=for-the-badge&logo=coffeescript&logoColor=white">
+  <img alt="Spring_Framework" src="https://img.shields.io/badge/Spring_Framework-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+  <img alt="Spring_Security" src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+  <img alt="Spring Security" src="https://img.shields.io/badge/Spring_Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+  <img alt="Jwt" src="https://img.shields.io/badge/JSON Web Tokens-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white">
+  <img alt="MySql" src="https://img.shields.io/badge/MYSQL-4479A1?style=for-the-badge&logo=mongodb&logoColor=white">
+  <img alt="Eclipse" src="https://img.shields.io/badge/Eclipse_IDE-2C2255?style=for-the-badge&logo=eclipseide&logoColor=white">
+</div>
 
-## A ideia,
-Pelo menos inicialmente é construir um CRUD simples, entendo como funciona a implementação dentro do Spring Boot e utilizando seus recursos, como annotations, interfaces, entre outros. Neste momento estou implementando o Crud de entidades Produto, atribuindo funções de um CRUD simples, mas a ideia é deixar o código com ainda mais robustez, implementado mostrando tudo o que aprendi ao longo do tempo.
+# Spring Studies 🗃️
 
-## Tecnologias Usadas
-	- Java
-	- Spring Boot
-	- Lombok
-	- MySQL
-	- Spring Tool Suite 4 (IDE)
+Repositório para alocar a aplicação REST desenvolvida durante meus estudos em relação ao Spring Framework e suas ferramentas.
+
+## Getting Started ▶️
+
+Todos os pré-requisitos necessários para execução do projeto deverão ser devidamente instalados na máquina local do desenvolvedor.
+
+### Pré-requisitos ⚙️
+
+- [Repositório](https://github.com/pedrohpdo/web-rest-springboot)
+- [Eclipse IDE](https://www.eclipse.org/downloads/)
+- [Java + JDK17](https://www.oracle.com/java/technologies/downloads/)
+- [MySQL](https://dev.mysql.com/downloads/installer/) (Workbench, Server e Connection Drivers (Java))
+- [Lombok](https://projectlombok.org/setup/eclipse) (Caso seja necessário)
+
 
 ## Referências
-Obviamente eu utilizei algumas referências externas para me guiar durante essa jornada de aprendizo. Sendo tudo gratuito, vou deixar os links para tudo o que consumi e estou consumindo durante esse processo:
 
 #### Loiane Groner
 [Instagram](https://www.instagram.com/loiane/)
