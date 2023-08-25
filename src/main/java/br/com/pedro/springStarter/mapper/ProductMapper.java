@@ -2,8 +2,8 @@ package br.com.pedro.springStarter.mapper;
 
 import org.springframework.stereotype.Component;
 
-import br.com.pedro.springStarter.models.entities.Product;
-import br.com.pedro.springStarter.models.entities.ProductDTO;
+import br.com.pedro.springStarter.models.entities.product.Product;
+import br.com.pedro.springStarter.models.entities.product.ProductDTO;
 
 @Component
 public class ProductMapper {
