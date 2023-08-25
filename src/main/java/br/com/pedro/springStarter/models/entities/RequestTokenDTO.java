@@ -1,5 +1,5 @@
 package br.com.pedro.springStarter.models.entities;
 
-public record AuthenticationDataDTO(String email, String password) {
+public record RequestTokenDTO(String email, String password) {
 
 }
