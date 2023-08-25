@@ -1,4 +1,4 @@
-package br.com.pedro.springStarter.models.entities;
+package br.com.pedro.springStarter.models.entities.product;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
