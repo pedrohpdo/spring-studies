@@ -10,7 +10,7 @@
 
 # Spring Studies 🗃️
 
-Repositório para alocar a aplicação REST desenvolvida durante meus estudos em relação ao Spring Framework e suas ferramentas.
+Repositório para alocar a aplicação REST desenvolvida durante meus estudos em relação ao Spring Framework e suas ferramentas. Utilizando Spring Boot, Spring Security e Autenticação com Tokens JWT utilizando MySQL como base de dados dentro de uma conexão local.
 
 ## Getting Started ▶️
 
