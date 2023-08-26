@@ -20,7 +20,7 @@ public class SecurityConfigs {
     private JwtAthFilter jwtAthFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csfr -> csfr.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
@@ -32,7 +32,7 @@ public class SecurityConfigs {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
     	return config.getAuthenticationManager();
     }
 }
