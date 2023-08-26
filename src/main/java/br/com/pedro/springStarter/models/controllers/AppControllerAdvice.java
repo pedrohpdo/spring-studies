@@ -2,7 +2,6 @@ package br.com.pedro.springStarter.models.controllers;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
-import br.com.pedro.springStarter.infra.exception.NullParamException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.pedro.springStarter.infra.exception.ErrorResponse;
+import br.com.pedro.springStarter.infra.exception.ExpiredTokenException;
+import br.com.pedro.springStarter.infra.exception.NullParamException;
 import br.com.pedro.springStarter.infra.exception.RecordNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -107,6 +108,16 @@ public class AppControllerAdvice extends ResponseEntityExceptionHandler {
 
 	}
 	
+	@ExceptionHandler(ExpiredTokenException.class)
+	public ResponseEntity<ErrorResponse> handlerInvalidTokenException(
+			ExpiredTokenException exception,
+			WebRequest request) {
+		
+		
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			
+	}
+	
 	@Override
 	public ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException exception,
@@ -126,4 +137,5 @@ public class AppControllerAdvice extends ResponseEntityExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
 	}
+
 }
