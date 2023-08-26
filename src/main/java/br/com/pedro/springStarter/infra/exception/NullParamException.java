@@ -1,8 +1,5 @@
 package br.com.pedro.springStarter.infra.exception;
 
-
-import java.io.Serial;
-
 public class NullParamException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
