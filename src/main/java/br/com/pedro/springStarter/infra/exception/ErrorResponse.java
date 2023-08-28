@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class ErrorResponse {
 
 	private Instant instant; // momento que a exception foi lancada
@@ -26,6 +29,8 @@ public class ErrorResponse {
 	 * @author Pedro Henrique Pereira de Oliveira
 	 * @since 4 de ago. de 2023
 	 */
+	@Getter
+	@Setter
 	private static class ValidationError {
 		private final String FIELD;
 		private final String ERROR;
@@ -35,13 +40,6 @@ public class ErrorResponse {
 			this.ERROR = ERROR;
 		}
 
-		public String getFIELD() {
-			return FIELD;
-		}
-
-		public String getERROR() {
-			return ERROR;
-		}
 	}
 
 	/**

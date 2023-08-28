@@ -15,7 +15,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.pedro.springStarter.infra.exception.ErrorResponse;
-import br.com.pedro.springStarter.infra.exception.ExpiredTokenException;
 import br.com.pedro.springStarter.infra.exception.NullParamException;
 import br.com.pedro.springStarter.infra.exception.RecordNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -104,18 +103,8 @@ public class AppControllerAdvice extends ResponseEntityExceptionHandler {
 
 		logger.error("Param must not be null");
 
-		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
 
-	}
-	
-	@ExceptionHandler(ExpiredTokenException.class)
-	public ResponseEntity<ErrorResponse> handlerInvalidTokenException(
-			ExpiredTokenException exception,
-			WebRequest request) {
-		
-		
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			
 	}
 	
 	@Override

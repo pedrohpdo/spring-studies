@@ -12,7 +12,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
-import br.com.pedro.springStarter.infra.exception.ExpiredTokenException;
 import br.com.pedro.springStarter.models.entities.User;
 
 @Service
@@ -50,7 +49,7 @@ public class TokenServices {
 					.getSubject();
 
 		} catch (JWTVerificationException e) {
-			throw new ExpiredTokenException(e.getLocalizedMessage());
+			throw new RuntimeException(e.getLocalizedMessage());
 		}
 	}
 
